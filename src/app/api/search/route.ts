@@ -24,7 +24,10 @@ export async function GET(request: NextRequest) {
     const response = {
       query,
       searchType,
-      results,
+      pages: results.map((result) => ({
+        title: result.title,
+        link: result.link,
+      })),
       resume,
     }
 
