@@ -1,6 +1,5 @@
 import { Result } from "@/types/types"
 import { GoogleGenerativeAI } from "@google/generative-ai"
-import "dotenv/config"
 
 if (!process.env.AI_API_KEY) {
   throw new Error("AI_API_KEY is not defined")

@@ -8,7 +8,7 @@ interface Props {
 
 export async function fetchBrowserResults({ query, searchType }: Props) {
   const browser = await chromium.launch({
-    headless: true,
+    headless: false,
   })
   const context = await browser.newContext()
   const page = await context.newPage()
