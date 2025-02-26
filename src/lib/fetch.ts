@@ -1,5 +1,5 @@
 import { SearchType } from "@/types/types"
-import { chromium } from "playwright"
+import puppeteer from "puppeteer"
 
 interface Props {
   query: string
@@ -7,14 +7,11 @@ interface Props {
 }
 
 export async function fetchBrowserResults({ query, searchType }: Props) {
-  const browser = await chromium.launch({
+  const browser = await puppeteer.launch({
     headless: true,
   })
-  const context = await browser.newContext({
-    userAgent:
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-  })
-  const page = await context.newPage()
+
+  const page = await browser.newPage()
 
   try {
     await page.goto(
