@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer"
+import { SearchType } from "@/components/Preferences"
 import { Search } from "lucide-react"
 
 export default function Home() {
@@ -8,45 +9,26 @@ export default function Home() {
         <h1 className="text-5xl font-bold">
           Welcome to <span className="text-primary">Digger</span>
         </h1>
-        <form action="/api/search" method="get" className="flex gap-4">
-          <input
-            type="text"
-            name="q"
-            placeholder="Search..."
-            required
-            min={2}
-            max={60}
-            className="p-2 border border-gray-300 rounded-md text-black"
-          />
-          <button
-            type="submit"
-            className="flex items-center gap-2 bg-white px-4 py-2 rounded-md text-black"
-          >
-            <Search size={16} />
-            Search
-          </button>
-          <div>
-            Pick your browser
-            <input type="radio" id="browser1" name="e" value="duckduckgo" />
-            <label htmlFor="browser1">Duck Duck Go</label>
-            <input type="radio" id="browser2" name="e" value="google" />
-            <label htmlFor="browser2">Google</label>
-          </div>
-          <div>
-            Set your search preferences
+        <form action="/api/search" method="get" className="flex gap-4 flex-col">
+          <div className="flex gap-4">
             <input
-              type="radio"
-              id="searchType1"
-              name="t"
-              value="fast"
-              defaultChecked
+              type="text"
+              name="q"
+              placeholder="Search..."
+              required
+              min={2}
+              max={60}
+              className="px-4 py-2 border border-gray-300 rounded-md text-black"
             />
-            <label htmlFor="searchType1">Fast</label>
-            <input type="radio" id="searchType2" name="t" value="accurate" />
-            <label htmlFor="searchType2">Accurate</label>
-            <input type="radio" id="searchType3" name="t" value="detailed" />
-            <label htmlFor="searchType3">Detailed</label>
+            <button
+              type="submit"
+              className="flex items-center gap-2 bg-white px-4 py-2 rounded-md text-black"
+            >
+              <Search size={16} />
+              Search
+            </button>
           </div>
+          <SearchType />
         </form>
       </main>
       <Footer />
