@@ -1,5 +1,5 @@
 import { SearchType } from "@/types/types"
-import puppeteer from "puppeteer-core"
+import puppeteer from "puppeteer"
 import chromium from "@sparticuz/chromium"
 
 interface Props {
@@ -12,7 +12,7 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(),
-    headless: false,
+    headless: "shell",
   })
 
   const page = await browser.newPage()
