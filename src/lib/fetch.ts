@@ -25,11 +25,11 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
     await page.goto(
       `https://duckduckgo.com/?q=${encodeURIComponent(query)}&t=${searchType}`,
       {
-        waitUntil: "domcontentloaded",
+        waitUntil: "networkidle0",
       }
     )
 
-    await page.waitForSelector("h2 a")
+    //await page.waitForSelector("h2 a")
 
     const results = await page.evaluate(() => {
       return Array.from(document.querySelectorAll("h2 a")).map((element) => ({
