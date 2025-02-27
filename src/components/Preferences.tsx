@@ -45,7 +45,7 @@ export function SearchType() {
       <h2>Set your search preferences</h2>
       <div className="flex justify-between">
         {typePreferences.map((type) => (
-          <div key={type.value}>
+          <div key={type.value} className="px-4 py-2 rounded flex gap-2 border">
             <input
               type="radio"
               id={type.value}
