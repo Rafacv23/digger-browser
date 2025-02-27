@@ -1,4 +1,5 @@
-import { Github, PersonStanding } from "lucide-react"
+import Footer from "@/components/Footer"
+import { Search } from "lucide-react"
 
 export default function Home() {
   return (
@@ -7,7 +8,7 @@ export default function Home() {
         <h1 className="text-5xl font-bold">
           Welcome to <span className="text-primary">Digger</span>
         </h1>
-        <form action="/api/search" method="get">
+        <form action="/api/search" method="get" className="flex gap-4">
           <input
             type="text"
             name="query"
@@ -16,29 +17,39 @@ export default function Home() {
             min={2}
             max={60}
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="flex items-center gap-2">
+            <Search size={16} />
+            Search
+          </button>
+          <div>
+            Pick your browser
+            <input type="radio" id="browser1" name="contact" value="email" />
+            <label htmlFor="browser1">Duck Duck Go</label>
+            <input type="radio" id="browser2" name="contact" value="phone" />
+            <label htmlFor="browser2">Duck Duck Go</label>
+          </div>
+          <div>
+            Set your search preferences
+            <input type="radio" id="searchType1" name="fast" value="fast" />
+            <label htmlFor="searchType1">Fast</label>
+            <input
+              type="radio"
+              id="searchType2"
+              name="accurate"
+              value="accurate"
+            />
+            <label htmlFor="searchType2">Accurate</label>
+            <input
+              type="radio"
+              id="searchType3"
+              name="detailed"
+              value="detailed"
+            />
+            <label htmlFor="searchType3">Detailed</label>
+          </div>
         </form>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Github size={16} />
-          GitHub
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <PersonStanding size={16} />
-          Porrfolio
-        </a>
-      </footer>
+      <Footer />
     </div>
   )
 }
