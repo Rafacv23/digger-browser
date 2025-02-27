@@ -11,40 +11,40 @@ export default function Home() {
         <form action="/api/search" method="get" className="flex gap-4">
           <input
             type="text"
-            name="query"
+            name="q"
             placeholder="Search..."
             required
             min={2}
             max={60}
+            className="p-2 border border-gray-300 rounded-md text-black"
           />
-          <button type="submit" className="flex items-center gap-2">
+          <button
+            type="submit"
+            className="flex items-center gap-2 bg-white px-4 py-2 rounded-md text-black"
+          >
             <Search size={16} />
             Search
           </button>
           <div>
             Pick your browser
-            <input type="radio" id="browser1" name="contact" value="email" />
+            <input type="radio" id="browser1" name="e" value="duckduckgo" />
             <label htmlFor="browser1">Duck Duck Go</label>
-            <input type="radio" id="browser2" name="contact" value="phone" />
-            <label htmlFor="browser2">Duck Duck Go</label>
+            <input type="radio" id="browser2" name="e" value="google" />
+            <label htmlFor="browser2">Google</label>
           </div>
           <div>
             Set your search preferences
-            <input type="radio" id="searchType1" name="fast" value="fast" />
+            <input
+              type="radio"
+              id="searchType1"
+              name="t"
+              value="fast"
+              defaultChecked
+            />
             <label htmlFor="searchType1">Fast</label>
-            <input
-              type="radio"
-              id="searchType2"
-              name="accurate"
-              value="accurate"
-            />
+            <input type="radio" id="searchType2" name="t" value="accurate" />
             <label htmlFor="searchType2">Accurate</label>
-            <input
-              type="radio"
-              id="searchType3"
-              name="detailed"
-              value="detailed"
-            />
+            <input type="radio" id="searchType3" name="t" value="detailed" />
             <label htmlFor="searchType3">Detailed</label>
           </div>
         </form>
