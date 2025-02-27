@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "postinstall": "npx puppeteer browsers install chrome",
     "start": "next start",
     "lint": "next lint"
   },
