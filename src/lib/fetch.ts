@@ -12,7 +12,7 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(),
-    headless: false,
+    headless: true,
   })
 
   const page = await browser.newPage()
