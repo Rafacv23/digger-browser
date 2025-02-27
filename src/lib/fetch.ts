@@ -1,5 +1,6 @@
 import { SearchType } from "@/types/types"
-import puppeteer from "puppeteer"
+import puppeteer from "puppeteer-core"
+import chromium from "chrome-aws-lambda"
 
 interface Props {
   query: string
@@ -8,7 +9,9 @@ interface Props {
 
 export async function fetchBrowserResults({ query, searchType }: Props) {
   const browser = await puppeteer.launch({
-    headless: true,
+    args: chromium.args,
+    executablePath: (await chromium.executablePath) || "/usr/bin/google-chrome",
+    headless: chromium.headless,
   })
 
   const page = await browser.newPage()
