@@ -1,6 +1,6 @@
 import { SearchType } from "@/types/types"
 import puppeteer from "puppeteer-core"
-import chromium from "@sparticuz/chromium"
+import chromium from "@sparticuz/chromium-min"
 
 interface Props {
   query: string
@@ -8,10 +8,16 @@ interface Props {
 }
 
 export async function fetchBrowserResults({ query, searchType }: Props) {
+  const isLocal = !!process.env.CHROME_EXECUTABLE_PATH
+
   const browser = await puppeteer.launch({
-    args: chromium.args,
+    args: isLocal ? puppeteer.defaultArgs() : chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
+    executablePath:
+      process.env.CHROME_EXECUTABLE_PATH ||
+      (await chromium.executablePath(
+        "https://<Bucket Name>.s3.amazonaws.com/chromium-v126.0.0-pack.tar"
+      )),
     headless: chromium.headless === "true",
   })
 
@@ -23,11 +29,10 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
 
   try {
     await page.goto(
-      `https://duckduckgo.com/?q=${encodeURIComponent(query)}&t=${searchType}`,
-      {
-        waitUntil: "networkidle0",
-      }
+      `https://duckduckgo.com/?q=${encodeURIComponent(query)}&t=${searchType}`
     )
+
+    await page.title()
 
     //await page.waitForSelector("h2 a")
 

@@ -5,17 +5,15 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "postinstall": "npx puppeteer browsers install",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@google/generative-ai": "^0.22.0",
-    "@sparticuz/chromium": "^132.0.0",
+    "@sparticuz/chromium-min": "^132.0.0",
     "lucide-react": "^0.476.0",
     "next": "15.1.7",
-    "puppeteer": "^24.3.0",
-    "puppeteer-core": "^24.3.0",
+    "puppeteer-core": "^24.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
