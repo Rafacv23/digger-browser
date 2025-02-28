@@ -29,7 +29,8 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
 
   try {
     await page.goto(
-      `https://duckduckgo.com/?q=${encodeURIComponent(query)}&t=${searchType}`
+      `https://duckduckgo.com/?q=${encodeURIComponent(query)}&t=${searchType}`,
+      { waitUntil: "networkidle2" }
     )
 
     await page.title()
