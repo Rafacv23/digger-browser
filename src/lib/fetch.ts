@@ -16,7 +16,7 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
     executablePath:
       process.env.CHROME_EXECUTABLE_PATH ||
       (await chromium.executablePath(
-        "https://chromium132.s3.amazonaws.com/chromium-v126.0.0-pack.tar"
+        "https://chromium132.s3.amazonaws.com/chromium-v132.0.0-pack.tar"
       )),
     headless: chromium.headless === "true",
   })
