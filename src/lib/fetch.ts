@@ -18,7 +18,7 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
       (await chromium.executablePath(
         "https://chromium132.s3.amazonaws.com/chromium-v132.0.0-pack.tar"
       )),
-    headless: chromium.headless === "true",
+    headless: chromium.headless,
   })
 
   const page = await browser.newPage()
@@ -33,9 +33,7 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
       { waitUntil: "networkidle2" }
     )
 
-    await page.title()
-
-    //await page.waitForSelector("h2 a")
+    await page.waitForSelector("h2 a")
 
     const results = await page.evaluate(() => {
       return Array.from(document.querySelectorAll("h2 a")).map((element) => ({
