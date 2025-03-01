@@ -3,6 +3,34 @@ import { fetchBrowserResults } from "@/lib/fetch"
 import { SearchType } from "@/types/types"
 import { NextResponse, type NextRequest } from "next/server"
 
+/**
+ * Valida los parámetros de entrada.
+ */
+function validateSearchParams(
+  query: string | null,
+  searchType: string | null
+): { isValid: boolean; error?: string } {
+  if (!query || query.trim() === "") {
+    return {
+      isValid: false,
+      error: "Query parameter 'q' is required and cannot be empty.",
+    }
+  }
+
+  const validSearchTypes: SearchType[] = ["fast", "accurate", "detailed"]
+  if (!searchType || !validSearchTypes.includes(searchType as SearchType)) {
+    return {
+      isValid: false,
+      error: `Search type 't' must be one of ${validSearchTypes.join(", ")}.`,
+    }
+  }
+
+  return { isValid: true }
+}
+
+/**
+ * Endpoint principal.
+ */
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
@@ -10,17 +38,29 @@ export async function GET(request: NextRequest) {
     const query = searchParams.get("q")
     const searchType = searchParams.get("t")
 
-    if (typeof query !== "string" || typeof searchType !== "string") {
-      return NextResponse.json({ message: "Invalid query" }, { status: 400 })
+    // Validar parámetros
+    const validation = validateSearchParams(query, searchType)
+    if (!validation.isValid) {
+      return NextResponse.json({ message: validation.error }, { status: 400 })
     }
 
+    // Obtener resultados del navegador
     const results = await fetchBrowserResults({
-      query: query,
+      query: query as string,
       searchType: searchType as SearchType,
     })
 
-    const resume = await generateAiContent(query, results)
+    if (results.length === 0) {
+      return NextResponse.json(
+        { message: "No results found for the given query." },
+        { status: 404 }
+      )
+    }
 
+    // Generar contenido con IA
+    const resume = await generateAiContent(query as string, results)
+
+    // Construir la respuesta
     const response = {
       query,
       searchType,
@@ -31,14 +71,28 @@ export async function GET(request: NextRequest) {
       resume,
     }
 
+    // Devolver respuesta con encabezados optimizados
     return NextResponse.json(response, {
       headers: {
-        "Cache-Control": "public, max-age=300, stale-while-revalidate=30",
+        "Cache-Control": "public, max-age=300, stale-while-revalidate=120",
+        "Content-Type": "application/json",
       },
       status: 200,
     })
   } catch (error) {
     console.error("Error:", error)
-    return NextResponse.json({ message: "Server error" }, { status: 500 })
+
+    // Manejo específico de errores
+    if (error instanceof Error && error.message.includes("AI_API_KEY")) {
+      return NextResponse.json(
+        { message: "AI API key is missing or invalid." },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json(
+      { message: "An unexpected server error occurred." },
+      { status: 500 }
+    )
   }
 }
