@@ -9,15 +9,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #010f0b;
     --foreground: #ededed;
+    --primary: #7af2d3;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Literata;
 }
 
 h2 {
