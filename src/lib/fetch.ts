@@ -18,7 +18,7 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
       (await chromium.executablePath(
         "https://chromium132.s3.amazonaws.com/chromium-v132.0.0-pack.tar"
       )),
-    headless: chromium.headless,
+    headless: true,
   })
 
   const page = await browser.newPage()
