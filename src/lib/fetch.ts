@@ -28,9 +28,19 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
   )
 
   try {
+    await page.setRequestInterception(true)
+    page.on("request", (request) => {
+      const resourceType = request.resourceType()
+      if (["image", "stylesheet", "font", "media"].includes(resourceType)) {
+        request.abort() // Bloqueamos recursos no esenciales
+      } else {
+        request.continue()
+      }
+    })
+
     await page.goto(
       `https://duckduckgo.com/?q=${encodeURIComponent(query)}&t=${searchType}`,
-      { waitUntil: "networkidle2" }
+      { waitUntil: "domcontentloaded" }
     )
 
     await page.waitForSelector("h2 a")
@@ -48,25 +58,39 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
     const filteredResults = results.slice(0, resultLimit)
 
     // we need to enter each result page to extract the text
-    for (const result of filteredResults) {
-      try {
-        await page.goto(result.link, { waitUntil: "domcontentloaded" })
-        await page.waitForSelector("body")
 
-        result.text = await page.evaluate(() => {
+    const promises = filteredResults.map(async (result) => {
+      try {
+        const newPage = await browser.newPage() // Abrimos una nueva pestaña para cada enlace
+        await newPage.goto(result.link, { waitUntil: "domcontentloaded" })
+        await newPage.setRequestInterception(true)
+        newPage.on("request", (request) => {
+          const resourceType = request.resourceType()
+          if (["image", "stylesheet", "font", "media"].includes(resourceType)) {
+            request.abort()
+          } else {
+            request.continue()
+          }
+        })
+
+        result.text = await newPage.evaluate(() => {
           return document.body.innerText.trim() || "No text"
         })
+        await newPage.close() // Cerramos la pestaña después de extraer el contenido
       } catch (error) {
         console.error(`Error al extraer texto de ${result.link}:`, error)
         result.text = "Error al obtener contenido"
       }
-    }
+      return result
+    })
 
-    return filteredResults
+    const enrichedResults = await Promise.all(promises) // Procesar todas las promesas en paralelo
+
+    return enrichedResults
   } catch (error) {
     console.error("Error en fetchBrowserResults:", error)
     return []
   } finally {
-    await browser.close()
+    await browser.close() // Asegurarse de cerrar el navegador en cualquier caso
   }
 }
