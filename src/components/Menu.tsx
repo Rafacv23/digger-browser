@@ -8,13 +8,14 @@ export function ResultsMenu({ data }: { data: ApiResponse }) {
       <h2>Pages</h2>
       <ul>
         {data.pages.map((page) => (
-          <li key={page.link}>
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href={page.link}
-            ></Link>
-          </li>
+          <Link
+            key={page.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={page.link}
+          >
+            {page.title}
+          </Link>
         ))}
       </ul>
       <h2>Results</h2>
