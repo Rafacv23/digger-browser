@@ -1,5 +1,4 @@
 import Footer from "@/components/Footer"
-import { SearchType } from "@/components/Preferences"
 import { Search } from "lucide-react"
 
 export default function Home() {
@@ -28,7 +27,6 @@ export default function Home() {
               Search
             </button>
           </div>
-          <SearchType />
         </form>
       </main>
       <Footer />
