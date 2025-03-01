@@ -2,8 +2,8 @@
 
 import Footer from "@/components/Footer"
 import { PreSearchMenu, ResultsMenu } from "@/components/Menu"
+import SearchForm from "@/components/SearchForm"
 import { ApiResponse } from "@/types/types"
-import { LoaderCircle, Search } from "lucide-react"
 import { useState } from "react"
 
 export default function Home() {
@@ -42,44 +42,16 @@ export default function Home() {
         <h1 className="text-5xl font-bold">
           Welcome to <span className="text-primary">Digger</span>
         </h1>
-        <form
-          onSubmit={handleSubmit}
-          method="get"
-          className="flex gap-4 flex-col"
-        >
-          <div className="flex gap-4">
-            <label htmlFor="q" className="sr-only">
-              Search query
-            </label>
-            <input
-              type="search"
-              id="q"
-              name="q"
-              placeholder="Search..."
-              required
-              min={2}
-              max={60}
-              className="px-4 py-2 border border-gray-300 rounded-md text-black"
-              onClick={() => setShowMenu(true)}
-            />
-            <button
-              type="submit"
-              className="flex items-center gap-2 bg-white px-4 py-2 rounded-md text-black"
-              disabled={loading}
-            >
-              {loading ? (
-                <LoaderCircle className="animate-spin" size={16} />
-              ) : (
-                <Search size={16} />
-              )}
-            </button>
-          </div>
-          {data ? (
-            <ResultsMenu data={data} />
-          ) : showMenu ? (
-            <PreSearchMenu />
-          ) : null}
-        </form>
+        <SearchForm
+          handleSubmit={handleSubmit}
+          loading={loading}
+          setShowMenu={setShowMenu}
+        />
+        {data ? (
+          <ResultsMenu data={data} />
+        ) : showMenu ? (
+          <PreSearchMenu />
+        ) : null}
       </main>
       <Footer />
     </div>
