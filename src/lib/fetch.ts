@@ -1,13 +1,11 @@
-import { SearchType } from "@/types/types"
 import puppeteer from "puppeteer-core"
 import chromium from "@sparticuz/chromium-min"
 
 interface Props {
   query: string
-  searchType: SearchType
 }
 
-export async function fetchBrowserResults({ query, searchType }: Props) {
+export async function fetchBrowserResults({ query }: Props) {
   const isLocal = !!process.env.CHROME_EXECUTABLE_PATH
 
   const browser = await puppeteer.launch({
@@ -38,10 +36,9 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
       }
     })
 
-    await page.goto(
-      `https://duckduckgo.com/?q=${encodeURIComponent(query)}&t=${searchType}`,
-      { waitUntil: "domcontentloaded" }
-    )
+    await page.goto(`https://duckduckgo.com/?q=${encodeURIComponent(query)}`, {
+      waitUntil: "domcontentloaded",
+    })
 
     await page.waitForSelector("h2 a")
 
@@ -53,8 +50,7 @@ export async function fetchBrowserResults({ query, searchType }: Props) {
       }))
     })
 
-    const resultLimit =
-      searchType === "fast" ? 3 : searchType === "accurate" ? 5 : 8
+    const resultLimit = 3
     const filteredResults = results.slice(0, resultLimit)
 
     // we need to enter each result page to extract the text

@@ -1,27 +1,18 @@
 import { generateAiContent } from "@/lib/ai"
 import { fetchBrowserResults } from "@/lib/fetch"
-import { SearchType } from "@/types/types"
 import { NextResponse, type NextRequest } from "next/server"
 
 /**
  * Valida los parámetros de entrada.
  */
-function validateSearchParams(
-  query: string | null,
-  searchType: string | null
-): { isValid: boolean; error?: string } {
+function validateSearchParams(query: string | null): {
+  isValid: boolean
+  error?: string
+} {
   if (!query || query.trim() === "") {
     return {
       isValid: false,
       error: "Query parameter 'q' is required and cannot be empty.",
-    }
-  }
-
-  const validSearchTypes: SearchType[] = ["fast", "accurate", "detailed"]
-  if (!searchType || !validSearchTypes.includes(searchType as SearchType)) {
-    return {
-      isValid: false,
-      error: `Search type 't' must be one of ${validSearchTypes.join(", ")}.`,
     }
   }
 
@@ -36,10 +27,9 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
 
     const query = searchParams.get("q")
-    const searchType = searchParams.get("t")
 
     // Validar parámetros
-    const validation = validateSearchParams(query, searchType)
+    const validation = validateSearchParams(query)
     if (!validation.isValid) {
       return NextResponse.json({ message: validation.error }, { status: 400 })
     }
@@ -47,7 +37,6 @@ export async function GET(request: NextRequest) {
     // Obtener resultados del navegador
     const results = await fetchBrowserResults({
       query: query as string,
-      searchType: searchType as SearchType,
     })
 
     if (results.length === 0) {
@@ -63,7 +52,6 @@ export async function GET(request: NextRequest) {
     // Construir la respuesta
     const response = {
       query,
-      searchType,
       pages: results.map((result) => ({
         title: result.title,
         link: result.link,
