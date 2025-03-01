@@ -1,5 +1,6 @@
 import { generateAiContent } from "@/lib/ai"
 import { fetchBrowserResults } from "@/lib/fetch"
+import { ApiResponse } from "@/types/types"
 import { NextResponse, type NextRequest } from "next/server"
 
 /**
@@ -50,7 +51,7 @@ export async function GET(request: NextRequest) {
     const resume = await generateAiContent(query as string, results)
 
     // Construir la respuesta
-    const response = {
+    const response: ApiResponse = {
       query,
       pages: results.map((result) => ({
         title: result.title,
