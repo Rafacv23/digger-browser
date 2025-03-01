@@ -24,6 +24,7 @@ export default function SearchForm({
           required
           min={2}
           max={60}
+          disabled={loading}
           className="px-4 py-2 border border-gray-300 rounded-md text-black"
           onClick={() => setShowMenu(true)}
         />
