@@ -1,3 +1,4 @@
+import { getRecentSearchs } from "@/lib/utils"
 import { ApiResponse } from "@/types/types"
 import Link from "next/link"
 
@@ -26,12 +27,42 @@ export function ResultsMenu({ data }: { data: ApiResponse }) {
 
 // menu for recent searches, displays before the user have results
 export function PreSearchMenu() {
+  const recentSearchs: ApiResponse[] = getRecentSearchs()
+
+  const related = recentSearchs.map((search: ApiResponse) => {
+    return search.pages.map((page) => ({
+      title: page.title,
+      link: page.link,
+    }))
+  })
+
   return (
     <div>
       <h2>Recent</h2>
       <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
+        {recentSearchs.map((search: ApiResponse) => (
+          <li key={search.query}>{search.query}</li>
+        ))}
+      </ul>
+      <h2>Related</h2>
+      <ul>
+        {related.map((pages) => (
+          <li key={pages[0].title}>
+            <ul>
+              {pages.map((page) => (
+                <li key={page.title}>
+                  <Link
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={page.link}
+                  >
+                    {page.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
       </ul>
     </div>
   )

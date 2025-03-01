@@ -3,6 +3,7 @@
 import Footer from "@/components/Footer"
 import { PreSearchMenu, ResultsMenu } from "@/components/Menu"
 import SearchForm from "@/components/SearchForm"
+import { addObjectToLocalStorage } from "@/lib/utils"
 import { ApiResponse } from "@/types/types"
 import { useState } from "react"
 
@@ -24,12 +25,12 @@ export default function Home() {
       return alert("Please enter a search query.")
     }
 
-    // save the query to local storage
-    localStorage.setItem("query", query.toString())
-
     const res = await fetch(`/api/search?q=${query}`)
 
     const data = await res.json()
+
+    // save the query to local storage
+    addObjectToLocalStorage(data)
 
     setData(data)
 
