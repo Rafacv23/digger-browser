@@ -1,5 +1,6 @@
 "use client"
 
+import { Hero } from "@/components/Hero"
 import { PreSearchMenu, ResultsMenu } from "@/components/Menu"
 import SearchForm from "@/components/SearchForm"
 import Skeleton from "@/components/Skeleton"
@@ -42,15 +43,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col gap-8 place-content-center h-screen">
-      <div>
-        <h1 className="text-5xl font-bold mb-4">
-          Welcome to <span className="text-primary">Digger</span>
-        </h1>
-        <p>
-          This browser scrap the results of the search engines and summarize
-          them for you with ai technology.{" "}
-        </p>
-      </div>
+      <Hero showMenu={showMenu} />
       <SearchForm
         handleSubmit={handleSubmit}
         loading={loading}
