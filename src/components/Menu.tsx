@@ -1,4 +1,4 @@
-import { getRecentSearchs } from "@/lib/utils"
+import { getRecentSearchs, retrieveDomain } from "@/lib/utils"
 import { ApiResponse } from "@/types/types"
 import { ExternalLink } from "lucide-react"
 import Link from "next/link"
@@ -8,21 +8,28 @@ export function ResultsMenu({ data }: { data: ApiResponse }) {
     <div>
       <h2>{data.query}</h2>
       <h2>Pages</h2>
-      <ul className="mb-4">
+      <ul className="mb-4 flex flex-col">
         {data.pages.map((page) => (
           <Link
             key={page.link}
             target="_blank"
             rel="noopener noreferrer"
             href={page.link}
+            className="w-full flex items-center justify-between"
           >
-            {page.title}
+            {retrieveDomain(page.link)} | {page.title}
             <ExternalLink size={16} />
           </Link>
         ))}
       </ul>
       <h2>Results</h2>
-      <article>{data.resume}</article>
+      <article className="prose prose-sm max-w-none">
+        {data.resume.split("\n").map((paragraph, index) => (
+          <p key={index} className="mb-4">
+            {paragraph}
+          </p>
+        ))}
+      </article>
     </div>
   )
 }
@@ -52,21 +59,19 @@ export function PreSearchMenu() {
         ))}
       </ul>
       <h2>Related</h2>
-      <ul>
+      <ul className="flex flex-col gap-2">
         {related.map((pages) => (
           <li key={pages[0].title}>
-            <ul>
+            <ul className="flex flex-col gap-2">
               {pages.map((page) => (
-                <li
-                  key={page.title}
-                  className="flex items-center justify-between"
-                >
+                <li key={page.title}>
                   <Link
                     target="_blank"
                     rel="noopener noreferrer"
                     href={page.link}
+                    className="flex items-center justify-between"
                   >
-                    {page.title}
+                    {retrieveDomain(page.link)} | {page.title}
                     <ExternalLink size={16} />
                   </Link>
                 </li>
