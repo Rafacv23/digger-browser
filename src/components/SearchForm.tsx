@@ -34,7 +34,10 @@ export default function SearchForm({
           disabled={loading}
         >
           {loading ? (
-            <LoaderCircle className="animate-spin" size={16} />
+            <span className="flex items-center gap-2">
+              <LoaderCircle className="animate-spin" size={16} />
+              Searching...
+            </span>
           ) : (
             <span className="flex items-center gap-2">
               <Search size={16} />

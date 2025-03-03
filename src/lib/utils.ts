@@ -8,6 +8,10 @@ export function addObjectToLocalStorage(newSearch: ApiResponse) {
   // Parse the string back into an array
   const existingArray = existingArrayStr ? JSON.parse(existingArrayStr) : []
 
+  if (existingArray.length >= 4) {
+    existingArray.shift()
+  }
+
   // Add the new object to the array
   existingArray.push(newSearch)
 

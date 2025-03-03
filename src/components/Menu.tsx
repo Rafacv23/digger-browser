@@ -38,8 +38,8 @@ export function PreSearchMenu() {
     }))
   })
 
-  return (
-    <div>
+  return recentSearchs.length > 0 ? (
+    <div className="flex flex-col">
       <h2>Recent</h2>
       <ul className="flex flex-wrap gap-2 mb-4">
         {recentSearchs.map((search: ApiResponse) => (
@@ -76,7 +76,7 @@ export function PreSearchMenu() {
         ))}
       </ul>
     </div>
-  )
+  ) : null
 }
 
 // Displays the controlls for the menu
