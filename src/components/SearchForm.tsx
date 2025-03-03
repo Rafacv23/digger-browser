@@ -12,7 +12,7 @@ export default function SearchForm({
 }) {
   return (
     <form onSubmit={handleSubmit} method="get" className="flex gap-4 flex-col">
-      <div className="flex gap-4">
+      <div className="flex gap-2 justify-between">
         <label htmlFor="q" className="sr-only">
           Search query
         </label>
@@ -25,7 +25,7 @@ export default function SearchForm({
           min={2}
           max={60}
           disabled={loading}
-          className="px-4 py-2 border border-gray-300 rounded-md text-black"
+          className="px-4 py-2 focus:outline-primary focus:outline rounded-md text-black w-full"
           onClick={() => setShowMenu(true)}
         />
         <button
@@ -36,7 +36,10 @@ export default function SearchForm({
           {loading ? (
             <LoaderCircle className="animate-spin" size={16} />
           ) : (
-            <Search size={16} />
+            <span className="flex items-center gap-2">
+              <Search size={16} />
+              Search
+            </span>
           )}
         </button>
       </div>
