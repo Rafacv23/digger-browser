@@ -42,7 +42,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col gap-8 place-content-center h-screen">
+    <main className="flex flex-col gap-8 place-content-center h-auto md:h-screen my-20 md:my-0">
       <Hero showMenu={showMenu} />
       <SearchForm
         handleSubmit={handleSubmit}

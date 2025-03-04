@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${literata.variable} antialiased max-w-[900px] mx-auto`}
+        className={`${literata.variable} antialiased max-w-[900px] mx-auto px-8`}
       >
         <Header />
         {children}
