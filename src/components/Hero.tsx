@@ -4,7 +4,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ showMenu }) => {
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center">
       <h1 className="text-5xl font-bold mb-8">
         Welcome to <span className="text-primary">Digger</span>
       </h1>
