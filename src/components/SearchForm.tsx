@@ -20,17 +20,17 @@ export default function SearchForm({
           type="search"
           id="q"
           name="q"
-          placeholder="Search..."
+          placeholder="I will summarize this for you..."
           required
           min={2}
           max={60}
           disabled={loading}
-          className="px-4 py-2 focus:outline-primary focus:outline rounded-md text-black w-full"
+          className="px-4 py-2 focus:outline-primary focus:outline bg-background border border-primary rounded-md w-full"
           onClick={() => setShowMenu(true)}
         />
         <button
           type="submit"
-          className="flex items-center gap-2 bg-white px-4 py-2 rounded-md text-black"
+          className="flex items-center gap-2 bg-primary px-4 py-2 rounded-md text-background"
           disabled={loading}
         >
           {loading ? (

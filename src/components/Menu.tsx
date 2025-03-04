@@ -2,6 +2,7 @@ import { getRecentSearchs, retrieveDomain } from "@/lib/utils"
 import { ApiResponse } from "@/types/types"
 import { ExternalLink } from "lucide-react"
 import Link from "next/link"
+import { Badge } from "./Badge"
 
 export function ResultsMenu({ data }: { data: ApiResponse }) {
   return (
@@ -50,12 +51,7 @@ export function PreSearchMenu() {
       <h2>Recent</h2>
       <ul className="flex flex-wrap gap-2 mb-4">
         {recentSearchs.map((search: ApiResponse) => (
-          <li
-            key={search.query}
-            className="border border-primary shadow rounded-md px-4 py-2 font-light"
-          >
-            {search.query}
-          </li>
+          <Badge query={search.query} key={search.query} />
         ))}
       </ul>
       <h2>Related</h2>
