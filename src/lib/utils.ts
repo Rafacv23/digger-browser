@@ -38,3 +38,16 @@ export function retrieveDomain(url: string): string {
   const domain = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i)
   return domain ? domain[2] : ""
 }
+
+// this function copies the url to the clipboard of the user
+export function share(query: string | null) {
+  const currentUrl = window.location.href // Get the full current URL, including query parameters
+  navigator.clipboard
+    .writeText(`${currentUrl}?q=${query}`)
+    .then(() => {
+      console.log("URL copied to clipboard successfully!")
+    })
+    .catch((error) => {
+      console.error("Failed to copy the URL: ", error)
+    })
+}
