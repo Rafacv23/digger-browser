@@ -9,12 +9,12 @@ const DownloadOptions = [
   },
   {
     name: "MacOS",
-    link: "https://github.com/Rafacv23/digger-browser-desktop/releases/tag/v0.0.1-alpha",
+    link: "https://github.com/Rafacv23/digger-browser-desktop/releases",
     icon: <Apple />,
   },
   {
     name: "Windows",
-    link: "https://github.com/Rafacv23/digger-browser-desktop/releases/tag/v0.0.1-alpha",
+    link: "https://github.com/Rafacv23/digger-browser-desktop/releases",
     icon: <Grid2X2 />,
   },
 ]
