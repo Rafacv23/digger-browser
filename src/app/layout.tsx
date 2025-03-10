@@ -11,7 +11,8 @@ const literata = Literata({
 
 export const metadata: Metadata = {
   title: "Digger Browser",
-  description: "AI powered search engine",
+  description:
+    "Next generation AI powered browser, that scraps the resuts of the web for you.",
 }
 
 export default function RootLayout({
