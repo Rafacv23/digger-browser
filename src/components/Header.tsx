@@ -5,11 +5,14 @@ export default function Header() {
     <header className="flex items-center justify-between py-4 mx-auto text-primary">
       <div>
         <Link href="/" title="Home">
-          <img src="favicon.png" alt="Digger browser logo" className="w-16" />
+          <img src="favicon3.png" alt="Digger browser logo" className="w-16" />
           Digger Browser
         </Link>
       </div>
       <div className="flex items-center gap-4">
+        <Link href="/download" title="Download">
+          Download
+        </Link>
         <Link href="/about" title="About">
           About
         </Link>
